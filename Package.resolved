@@ -84,7 +84,7 @@
     {
       "identity" : "swift-shared-kit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nathanborror/swift-shared-kit",
+      "location" : "https://github.com/ET-LINK/swift-shared-kit",
       "state" : {
         "branch" : "main",
         "revision" : "2422d3c4c0717f0ee1fea8a67abbc3584d67f779"

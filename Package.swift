@@ -16,7 +16,7 @@ let package = Package(
         .executable(name: "GenCmd", targets: ["GenCmd"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nathanborror/swift-shared-kit", branch: "main"),
+        .package(url: "https://github.com/ET-LINK/swift-shared-kit", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-openai", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-ollama", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-mistral", branch: "main"),
