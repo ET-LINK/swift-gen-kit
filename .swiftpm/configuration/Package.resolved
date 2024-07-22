@@ -1,0 +1,140 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
+    {
+      "identity" : "moya",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Moya/Moya.git",
+      "state" : {
+        "revision" : "c263811c1f3dbf002be9bd83107f7cdc38992b26",
+        "version" : "15.0.3"
+      }
+    },
+    {
+      "identity" : "reactiveswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveCocoa/ReactiveSwift.git",
+      "state" : {
+        "revision" : "c43bae3dac73fdd3cb906bd5a1914686ca71ed3c",
+        "version" : "6.7.0"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift.git",
+      "state" : {
+        "revision" : "b06a8c8596e4c3e8e7788e08e720e3248563ce6a",
+        "version" : "6.7.1"
+      }
+    },
+    {
+      "identity" : "smartcodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/intsig171/SmartCodable",
+      "state" : {
+        "revision" : "7c20dd24c1f9c3ad102dc41fa46290dc5a3981db",
+        "version" : "4.1.1"
+      }
+    },
+    {
+      "identity" : "swift-anthropic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-anthropic",
+      "state" : {
+        "branch" : "main",
+        "revision" : "42bf30d5888f752ef9a44d8c24de4cb74ec5661b"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "branch" : "main",
+        "revision" : "81ac87218685126f8ce971c025b68c2883bfa818"
+      }
+    },
+    {
+      "identity" : "swift-elevenlabs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-elevenlabs",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fe859b3fa58aa7eb47e8218bebe68132340940ec"
+      }
+    },
+    {
+      "identity" : "swift-fal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-fal",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9134dced8100584463d7c427773708eae7289889"
+      }
+    },
+    {
+      "identity" : "swift-google-gen",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-google-gen",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d0a04a228ccd46b097220085cf33c4adcefe7a8d"
+      }
+    },
+    {
+      "identity" : "swift-mistral",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-mistral",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b6f5aa9c310f50cd054d884bd4aa47115a72ba12"
+      }
+    },
+    {
+      "identity" : "swift-ollama",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-ollama",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8c4b8110333dcfc05ee6a234923f3df577feaa28"
+      }
+    },
+    {
+      "identity" : "swift-openai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-openai",
+      "state" : {
+        "branch" : "main",
+        "revision" : "07f3a376d202a25167a2c92a69e56968d9e21c9b"
+      }
+    },
+    {
+      "identity" : "swift-perplexity",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-perplexity",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c9df8111f9f77e7821a40a2dd91a32d1d667acbe"
+      }
+    },
+    {
+      "identity" : "swift-shared-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathanborror/swift-shared-kit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2422d3c4c0717f0ee1fea8a67abbc3584d67f779"
+      }
+    }
+  ],
+  "version" : 2
+}

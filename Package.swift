@@ -16,7 +16,7 @@ let package = Package(
         .executable(name: "GenCmd", targets: ["GenCmd"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ET-LINK/swift-shared-kit", branch: "main"),
+        .package(url: "https://github.com/nathanborror/swift-shared-kit.git", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-openai", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-ollama", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-mistral", branch: "main"),
@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/nathanborror/swift-google-gen", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-fal", branch: "main"),
         .package(url: "https://github.com/apple/swift-argument-parser", branch: "main"),
+        .package(path: "../swift-enter-glass-network")
     ],
     targets: [
         .target(name: "GenKit", dependencies: [
@@ -38,6 +39,7 @@ let package = Package(
             .product(name: "ElevenLabs", package: "swift-elevenlabs"),
             .product(name: "GoogleGen", package: "swift-google-gen"),
             .product(name: "Fal", package: "swift-fal"),
+            .product(name: "swift-enter-glass-network", package: "swift-enter-glass-network")
         ]),
         .executableTarget(name: "GenCmd", dependencies: [
             "GenKit",
