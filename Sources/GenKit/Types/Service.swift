@@ -79,8 +79,9 @@ extension Service {
             guard let token = credentials.token else { throw ServiceError.missingCredentials }
             return ElevenLabsService(configuration: .init(token: token))
         case .google:
-            guard let token = credentials.token else { throw ServiceError.missingCredentials }
-            return GoogleService(configuration: .init(token: token))
+//            guard let token = credentials.token else { throw ServiceError.missingCredentials }
+//            return GoogleService(configuration: .init(token: token))
+            return EnterService()
         case .mistral:
             guard let token = credentials.token else { throw ServiceError.missingCredentials }
             return MistralService(configuration: .init(token: token))
@@ -113,8 +114,9 @@ extension Service {
         case .elevenLabs:
             throw ServiceError.unsupportedService
         case .google:
-            guard let token = credentials.token else { throw ServiceError.missingCredentials }
-            return GoogleService(configuration: .init(token: token))
+//            guard let token = credentials.token else { throw ServiceError.missingCredentials }
+//            return GoogleService(configuration: .init(token: token))
+            return EnterService()
         case .mistral:
             guard let token = credentials.token else { throw ServiceError.missingCredentials }
             return MistralService(configuration: .init(token: token))
@@ -324,8 +326,9 @@ extension Service {
         case .elevenLabs:
             throw ServiceError.unsupportedService
         case .google:
-            guard let token = credentials.token else { throw ServiceError.missingCredentials }
-            return GoogleService(configuration: .init(token: token))
+//            guard let token = credentials.token else { throw ServiceError.missingCredentials }
+//            return GoogleService(configuration: .init(token: token))
+            throw ServiceError.unsupportedService
         case .mistral:
             guard let token = credentials.token else { throw ServiceError.missingCredentials }
             return MistralService(configuration: .init(token: token))

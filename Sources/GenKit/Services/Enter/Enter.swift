@@ -43,3 +43,11 @@ extension EnterService: ChatService {
     }
     
 }
+
+
+extension EnterService: ModelService {
+    
+    public func models() async throws -> [Model] {
+        return []
+    }
+}
