@@ -15,7 +15,7 @@ public struct Message: Codable, Identifiable {
     public var metadata: Metadata
     public var created: Date
     public var modified: Date
-    
+    public var input: [String]?
     public enum Kind: String, Codable {
         /// Instructions are sent to APIs but not shown in the UI (unless in a debug mode).
         case instruction
@@ -55,7 +55,7 @@ public struct Message: Codable, Identifiable {
     public init(id: String = .id, kind: Kind = .none, role: Role, content: String? = nil,
                 attachments: [Attachment] = [], toolCalls: [ToolCall]? = nil, toolCallID: String? = nil,
                 runID: String? = nil, name: String? = nil, finishReason: FinishReason? = .stop,
-                metadata: [String: String] = [:]) {
+                metadata: [String: String] = [:], input: [String]? = nil) {
         self.id = id
         self.kind = kind
         self.role = role
@@ -69,6 +69,7 @@ public struct Message: Codable, Identifiable {
         self.metadata = .init(metadata)
         self.created = .now
         self.modified = .now
+        self.input = input
     }
 }
 

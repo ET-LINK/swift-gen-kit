@@ -36,6 +36,7 @@ extension OpenAIService: ChatService {
         let payload = makeRequest(model: request.model, messages: request.messages, tools: request.tools, toolChoice: request.toolChoice)
         var message = Message(role: .assistant)
         for try await result in client.chatsStream(query: payload) {
+            print(result)
             message = decode(result: result, into: message)
             await update(message)
         }

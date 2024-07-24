@@ -7,73 +7,115 @@
 
 import Foundation
 import swift_enter_glass_network
+import SharedKit
 
 extension EnterService {
     
-    func decode(result: ChatStreamResult) -> Message {
-        let choice = result.choices.first
-        let message = choice?.delta
-        
-        return .init(
-            id: result.id,
-            role: decode(role: message?.role ?? .assistant),
-            content: message?.content,
-            toolCalls: message?.toolCalls?.map { decode(toolCall: $0) },
-            finishReason: decode(finishReason: choice?.finishReason))
-    }
-    
-    func decode(result: ChatStreamResult, into message: Message) -> Message {
-        var message = message
-        let choice = result.choices.first
-        if choice?.delta.role == .assistant {
-            message.content = patch(string: message.content, with: choice?.delta.content)
-            message.name = result.systemFingerprint
-        }
-        message.id = result.id
-        message.finishReason = decode(finishReason: choice?.finishReason)
-        message.modified = .now
-        
-        // Convoluted way to add new tool calls and patch the last tool call being streamed in.
-        if let toolCalls = choice?.delta.toolCalls {
-            if message.toolCalls == nil {
-                message.toolCalls = []
-            }
-            for toolCall in toolCalls {
-                let newToolCall = decode(toolCall: toolCall)
-                message.toolCalls?.append(newToolCall)
-
-                
+    func decode(result: ChatResponse) -> Message {
+        var message = Message(
+            role: decode(role: result.role),
+            finishReason: decode(finishReason: result.stopReason)
+        )
+        for content in result.content ?? [] {
+            switch content.type {
+            case .text, .text_delta:
+                message.content = content.text
+            case .tool_use:
+                if message.toolCalls == nil {
+                    message.toolCalls = []
+                }
+                let data = try? JSONEncoder().encode(content.input)
+                message.toolCalls?.append(.init(
+                    id: content.id ?? .id,
+                    function: .init(
+                        name: content.name ?? "",
+                        arguments: (data != nil) ? String(data: data!, encoding: .utf8)! : ""
+                    )
+                ))
+            case .input_json_delta:
+                break
+            case .none:
+                break
             }
         }
         return message
     }
+    
+    func decode(result: ChatStreamResponse, into message: Message) -> Message {
+        var message = message
+        switch result.type {
+        case .agent_thought:
+            if let msg = result.message {
+                message.id = msg.id ?? message.id
+                message.finishReason = decode(finishReason: msg.stopReason)
+            }
+            if let contentBlock = result.contentBlock {
+                switch contentBlock.type {
+                case .text:
+                    message.content = contentBlock.text
+                case .tool_use:
+                    var toolCall = ToolCall(function: .init(name: contentBlock.name ?? "", arguments: ""))
+                    toolCall.id = contentBlock.id ?? toolCall.id
+                    if message.toolCalls == nil {
+                        message.toolCalls = []
+                    }
+                    message.toolCalls?.append(toolCall)
+                default:
+                    break
+                }
+            }
+            
+        case .agent_message:
+            if let delta = result.delta {
+                switch delta.type {
+                case .text_delta:
+                    message.content = patch(string: message.content, with: delta.text)
+                case .input_json_delta:
+                    if var existing = message.toolCalls?.last {
+                        existing.function.arguments = patch(string: existing.function.arguments, with: delta.partialJSON) ?? ""
+                        message.toolCalls![message.toolCalls!.count-1] = existing
+                    }
+                default:
+                    break
+                }
+            }
+        case .message_end:
+            if message.toolCalls != nil {
+                message.finishReason = .toolCalls
+            } else {
+                message.finishReason = .stop
+            }
+        case .message:
+            break
+        case .message_file:
+            break
+        case .tts_message_end:
+            break
+        }
+        
+        message.modified = .now
+        return message
+    }
 
-    func decode(role: Chat.Role) -> Message.Role {
+    func decode(role: Role?) -> Message.Role {
         switch role {
-        case .system: .system
         case .user: .user
-        case .assistant: .assistant
-        case .tool: .tool
+        case .assistant, .none: .assistant
         }
     }
 
-    func decode(finishReason: String?) -> Message.FinishReason? {
+    func decode(finishReason: StopReason?) -> Message.FinishReason? {
         switch finishReason {
-        case "stop": .stop
-        case "length": .length
-        case "tool_calls": .toolCalls
-        case "content_filter": .contentFilter
-        default: nil
+        case .end_turn:
+            return .stop
+        case .max_tokens:
+            return .length
+        case .stop_sequence:
+            return .cancelled
+        case .tool_use:
+            return .toolCalls
+        default:
+            return .none
         }
-    }
-
-    func decode(toolCall: Chat.ToolCall) -> ToolCall {
-        .init(
-            type: toolCall.type ?? "",
-            function: .init(
-                name: toolCall.function.name ?? "",
-                arguments: toolCall.function.arguments ?? ""
-            )
-        )
     }
 }
