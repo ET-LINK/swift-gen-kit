@@ -48,6 +48,7 @@ extension EnterService {
             if let msg = result.message {
                 message.id = msg.id ?? message.id
                 message.finishReason = decode(finishReason: msg.stopReason)
+                message.name = msg.type
             }
             if let contentBlock = result.contentBlock {
                 switch contentBlock.type {

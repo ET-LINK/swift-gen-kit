@@ -74,3 +74,37 @@ extension EnterService: ModelService {
         return result.models.map { Model(id: $0, owner: "enter") }
     }
 }
+
+
+extension EnterService: VisionService {
+    
+    public func completion(request: VisionServiceRequest) async throws -> Message {
+        let separator = "|"
+        let splitArray = request.model.components(separatedBy: separator)
+        let model = splitArray.first ?? ""
+        var conversationId: String?
+        if splitArray.count > 1 {
+            conversationId = splitArray.last
+        }
+        let payload = makeRequest(model: request.model, messages: request.messages)
+        let result = try await client.chat(payload)
+        return decode(result: result)
+    }
+    
+    public func completionStream(request: VisionServiceRequest, update: (Message) async -> Void) async throws {
+        let separator = "|"
+        let splitArray = request.model.components(separatedBy: separator)
+        let model = splitArray.first ?? ""
+        var conversationId: String?
+        if splitArray.count > 1 {
+            conversationId = splitArray.last
+        }
+        let payload = makeRequest(model: model, messages: request.messages, conversation: conversationId)
+        var message = Message(role: .assistant)
+        for try await result in client.chatStream(payload) {
+            if let error = result.error { throw error }
+            message = decode(result: result, into: message)
+            await update(message)
+        }
+    }
+}
