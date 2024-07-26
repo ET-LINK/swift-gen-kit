@@ -14,7 +14,11 @@ public struct Service: Codable, Identifiable {
     public var preferredEmbeddingModel: String?
     public var preferredTranscriptionModel: String?
     public var preferredToolModel: String?
-    public var preferredVisionModel: String?
+    public var preferredVisionModel: String? {
+        didSet {
+            print("\(id)-\(preferredVisionModel)")
+        }
+    }
     public var preferredSpeechModel: String?
     public var preferredSummarizationModel: String?
     
@@ -53,7 +57,6 @@ public struct Service: Codable, Identifiable {
         self.name = name
         self.credentials = credentials
         self.models = models
-        
         self.preferredChatModel = preferredChatModel
         self.preferredImageModel = preferredImageModel
         self.preferredEmbeddingModel = preferredEmbeddingModel
@@ -267,7 +270,7 @@ extension Service {
         case .elevenLabs:
             throw ServiceError.unsupportedService
         case .google:
-            throw ServiceError.unsupportedService
+            return EnterService()
         case .mistral:
             throw ServiceError.unsupportedService
         case .ollama:
