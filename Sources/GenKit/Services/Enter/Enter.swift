@@ -34,13 +34,8 @@ public final class EnterService {
 extension EnterService: ChatService {
     
     public func completion(request: ChatServiceRequest) async throws -> Message {
-        let separator = "|"
-        let splitArray = request.model.components(separatedBy: separator)
-        let model = splitArray.first ?? ""
-        var conversationId: String?
-        if splitArray.count > 1 {
-            conversationId = splitArray.last
-        }
+        let model = request.model
+        let conversationId = request.conversationId
         let payload = makeRequest(model: model, messages: request.messages, conversation: conversationId, tools: request.tools)
         let result = try await client.chat(payload)
         if let error = result.error { throw error }
@@ -48,20 +43,17 @@ extension EnterService: ChatService {
     }
     
     public func completionStream(request: ChatServiceRequest, update: (Message) async -> Void) async throws {
-        let separator = "|"
-        let splitArray = request.model.components(separatedBy: separator)
-        let model = splitArray.first ?? ""
-        var conversationId: String?
-        if splitArray.count > 1 {
-            conversationId = splitArray.last
-        }
+        
+        let model = request.model
+        let conversationId = request.conversationId
+        
         let payload = makeRequest(model: model, messages: request.messages, conversation: conversationId, tools: request.tools)
         var message = Message(role: .assistant)
         for try await result in client.chatStream(payload) {
             if let error = result.error { throw error }
-            print(result)
+     
             message = decode(result: result, into: message)
-            print(message)
+      
             await update(message)
         }
     }
@@ -79,26 +71,15 @@ extension EnterService: ModelService {
 extension EnterService: VisionService {
     
     public func completion(request: VisionServiceRequest) async throws -> Message {
-        let separator = "|"
-        let splitArray = request.model.components(separatedBy: separator)
-        let model = splitArray.first ?? ""
-        var conversationId: String?
-        if splitArray.count > 1 {
-            conversationId = splitArray.last
-        }
+        let model = request.model
         let payload = makeRequest(model: request.model, messages: request.messages)
         let result = try await client.chat(payload)
         return decode(result: result)
     }
     
     public func completionStream(request: VisionServiceRequest, update: (Message) async -> Void) async throws {
-        let separator = "|"
-        let splitArray = request.model.components(separatedBy: separator)
-        let model = splitArray.first ?? ""
-        var conversationId: String?
-        if splitArray.count > 1 {
-            conversationId = splitArray.last
-        }
+        let model = request.model
+        let conversationId = request.conversationId
         let payload = makeRequest(model: model, messages: request.messages, conversation: conversationId)
         var message = Message(role: .assistant)
         for try await result in client.chatStream(payload) {

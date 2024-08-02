@@ -16,7 +16,7 @@ extension EnterService {
     // assistant messages.
     func encode(messages: [Message]) -> (String?, [ChatRequest.Message]) {
         let messagesFiltered = messages
-            .filter { $0.role != .system }
+            .filter { $0.role == .user }
         
         var lastArray: [ChatRequest.Message] = []
         if let last = messagesFiltered.last {
@@ -52,20 +52,6 @@ extension EnterService {
             }
         }.compactMap { $0 }
         
-        // Prepare tool calls
-//        if let toolCalls = message.toolCalls {
-//            for toolCall in toolCalls {
-//                if let data = toolCall.function.arguments.data(using: .utf8), let input = try? JSONDecoder().decode([String: AnyValue].self, from: data) {
-//                    let content = ChatRequest.Message.Content(
-//                        type: .tool_use,
-//                        id: toolCall.id,
-//                        name: toolCall.function.name,
-//                        input: input
-//                    )
-//                    out.content.append(content)
-//                }
-//            }
-//        }
         
         // Handle tool responses or append message content
         if message.role == .tool {

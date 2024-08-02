@@ -1,8 +1,9 @@
 import Foundation
 import SharedKit
+import SmartCodable
 
 public struct Message: Codable, Identifiable {
-    public var id: String
+    public var id: String // message_id
     public var kind: Kind
     public var role: Role
     public var content: String?
@@ -10,12 +11,12 @@ public struct Message: Codable, Identifiable {
     public var toolCalls: [ToolCall]?
     public var toolCallID: String?
     public var runID: String?
-    public var name: String?
+    public var name: String? // conversation_id
     public var finishReason: FinishReason?
     public var metadata: Metadata
     public var created: Date
     public var modified: Date
-    public var input: [String]?
+    public var input: [String: String]?
     public enum Kind: String, Codable {
         /// Instructions are sent to APIs but not shown in the UI (unless in a debug mode).
         case instruction
@@ -55,7 +56,7 @@ public struct Message: Codable, Identifiable {
     public init(id: String = .id, kind: Kind = .none, role: Role, content: String? = nil,
                 attachments: [Attachment] = [], toolCalls: [ToolCall]? = nil, toolCallID: String? = nil,
                 runID: String? = nil, name: String? = nil, finishReason: FinishReason? = .stop,
-                metadata: [String: String] = [:], input: [String]? = nil) {
+                metadata: [String: String] = [:], input: [String: String]? = nil) {
         self.id = id
         self.kind = kind
         self.role = role

@@ -46,7 +46,7 @@ extension MistralService {
     
     func encode(toolCall: ToolCall) -> Mistral.Message.ToolCall {
         .init(
-             function: .init(
+            id: toolCall.id, function: .init(
                 name: toolCall.function.name,
                 arguments: toolCall.function.arguments
             )
