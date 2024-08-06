@@ -26,8 +26,8 @@ let package = Package(
         .package(url: "https://github.com/nathanborror/swift-google-gen", branch: "main"),
         .package(url: "https://github.com/nathanborror/swift-fal", branch: "main"),
         .package(url: "https://github.com/apple/swift-argument-parser", branch: "main"),
-        .package(path: "../swift-enter-glass-network")
-//        .package(url: "https://github.com/Entertech/Enter-Smart-Glass-Networking.git", branch: "main")
+//        .package(path: "../swift-enter-glass-network")
+        .package(url: "https://github.com/Entertech/Enter-Smart-Glass-Networking.git", branch: "main")
     ],
     targets: [
         .target(name: "GenKit", dependencies: [
