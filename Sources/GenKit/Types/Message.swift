@@ -17,6 +17,7 @@ public struct Message: Codable, Identifiable {
     public var created: Date
     public var modified: Date
     public var input: [String: AnyValue]?
+    public var storage: Storage?
     public enum Kind: String, Codable {
         /// Instructions are sent to APIs but not shown in the UI (unless in a debug mode).
         case instruction
@@ -26,6 +27,11 @@ public struct Message: Codable, Identifiable {
         case error
         /// Messages without a `kind` are always sent to APIs and always shown in the UI.
         case none
+    }
+    
+    public enum Storage: String, Codable {
+        case local
+        case online
     }
     
     public enum Role: String, Codable {
@@ -58,7 +64,7 @@ public struct Message: Codable, Identifiable {
     public init(id: String = .id, kind: Kind = .none, role: Role, content: String? = nil,
                 attachments: [Attachment] = [], toolCalls: [ToolCall]? = nil, toolCallID: String? = nil,
                 runID: String? = nil, name: String? = nil, finishReason: FinishReason? = .stop,
-                metadata: [String: String] = [:], input: [String: AnyValue]? = nil) {
+                metadata: [String: String] = [:], input: [String: AnyValue]? = nil, storage: Storage = .local) {
         self.id = id
         self.kind = kind
         self.role = role
@@ -73,6 +79,7 @@ public struct Message: Codable, Identifiable {
         self.created = .now
         self.modified = .now
         self.input = input
+        self.storage = storage
     }
 }
 

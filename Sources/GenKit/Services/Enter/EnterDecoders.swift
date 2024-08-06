@@ -93,7 +93,7 @@ extension EnterService {
         case .tts_message_end:
             break
         }
-        
+        message.storage = .local
         message.modified = .now
         return message
     }
