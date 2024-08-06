@@ -55,12 +55,12 @@ extension EnterService {
                 case .text:
                     message.content = contentBlock.text
                 case .tool_use:
-                    var toolCall = ToolCall(function: .init(name: contentBlock.name ?? "", arguments: ""))
-                    toolCall.id = contentBlock.id ?? toolCall.id
-                    if message.toolCalls == nil {
-                        message.toolCalls = []
+                    let toolCall = Message.Component(name: contentBlock.name ?? "Unknow", json: contentBlock.partialJSON ?? "", content: contentBlock.text)
+                    if let index = message.attachments.firstIndex(where: { if case .component(_) = $0 { return true } else { return false } }) {
+                        message.attachments[index] = .component(toolCall)
+                    } else {
+                        message.attachments.append(.component(toolCall))
                     }
-                    message.toolCalls?.append(toolCall)
                 default:
                     break
                 }

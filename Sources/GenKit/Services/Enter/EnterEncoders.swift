@@ -58,8 +58,8 @@ extension EnterService {
             out.content.append(.init(type: .tool_result, content: [.init(type: .text, text: message.content)], toolUseID: message.toolCallID))
         } else {
             if let text = message.content {
-                
-                out.content.append(swift_enter_glass_network.ChatRequest.Message.Content.init(type: .text, text: text, input: message.input))
+                let chat = swift_enter_glass_network.ChatRequest.Message.Content.init(type: .text, text: text, input: message.input)
+                out.content.append(chat)
             }
         }
         return out

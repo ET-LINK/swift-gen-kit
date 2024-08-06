@@ -16,7 +16,7 @@ public struct Message: Codable, Identifiable {
     public var metadata: Metadata
     public var created: Date
     public var modified: Date
-    public var input: [String: String]?
+    public var input: [String: AnyValue]?
     public enum Kind: String, Codable {
         /// Instructions are sent to APIs but not shown in the UI (unless in a debug mode).
         case instruction
@@ -45,18 +45,20 @@ public struct Message: Codable, Identifiable {
     
     public struct Component: Codable {
         public var name: String
+        public var content: String?
         public var json: String
         
-        public init(name: String, json: String) {
+        public init(name: String, json: String, content: String? = nil) {
             self.name = name
             self.json = json
+            self.content = content
         }
     }
     
     public init(id: String = .id, kind: Kind = .none, role: Role, content: String? = nil,
                 attachments: [Attachment] = [], toolCalls: [ToolCall]? = nil, toolCallID: String? = nil,
                 runID: String? = nil, name: String? = nil, finishReason: FinishReason? = .stop,
-                metadata: [String: String] = [:], input: [String: String]? = nil) {
+                metadata: [String: String] = [:], input: [String: AnyValue]? = nil) {
         self.id = id
         self.kind = kind
         self.role = role
