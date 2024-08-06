@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "enter-smart-glass-networking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Entertech/Enter-Smart-Glass-Networking.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7e6710e083e12cf43336ae594f49736cb39e7b1a"
+      }
+    },
+    {
       "identity" : "moya",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya.git",

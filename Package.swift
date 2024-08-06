@@ -40,8 +40,7 @@ let package = Package(
             .product(name: "ElevenLabs", package: "swift-elevenlabs"),
             .product(name: "GoogleGen", package: "swift-google-gen"),
             .product(name: "Fal", package: "swift-fal"),
-//            .product(name: "swift-enter-glass-network", package: "Enter-Smart-Glass-Networking")
-            .product(name: "swift-enter-glass-network", package: "swift-enter-glass-network")
+            .product(name: "EnterGlassNetwork", package: "Enter-Smart-Glass-Networking")
         ]),
         .executableTarget(name: "GenCmd", dependencies: [
             "GenKit",

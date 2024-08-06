@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import swift_enter_glass_network
+import EnterGlassNetwork
 import SharedKit
 
 extension EnterService {

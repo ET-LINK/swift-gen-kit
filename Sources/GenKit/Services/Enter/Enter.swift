@@ -7,7 +7,7 @@
 
 import Foundation
 import OSLog
-import swift_enter_glass_network
+import EnterGlassNetwork
 
 private let logger = Logger(subsystem: "EnterService", category: "GenKit")
 public final class EnterService {
